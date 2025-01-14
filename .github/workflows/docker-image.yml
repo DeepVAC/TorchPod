@@ -16,7 +16,7 @@ jobs:
       with:
         username: ${{ secrets.HUB_USERNAME }}
         password: ${{ secrets.HUB_TOKEN }}
-    - name: Build the homepod base image
-      run: cd docker/homepod/ && bash build_image.sh standard && bash build_image.sh pro
+    - name: Build the torchpod base image
+      run: cd docker/torchpod/ && bash build_image.sh standard && bash build_image.sh pro
     - name: Push Docker image
-      run: docker push gemfield/homepod
+      run: docker push gemfield/torchpod

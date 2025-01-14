@@ -1,0 +1,24 @@
+#!/command/with-contenv bash
+
+set -eu
+set -o pipefail
+
+if [[ "${PROTOCOL,,}" != "wayland" ]]; then
+    exec sleep infinity
+fi
+
+if [[ "${TORCHPOD_MODE,,}" == "vnc" ]]; then
+    exec sleep infinity
+elif [[ "${TORCHPOD_MODE,,}" == *"rdp"* ]]; then
+    echo "GEMFIELD: USE RDP. start krdpserver..."
+    s6-svwait /run/service/kde
+    exec s6-setuidgid $TORCHPOD_USER /usr/bin/krdpserver -u $TORCHPOD_USER -p $TORCHPOD_PASSWORD
+elif [[ "${TORCHPOD_MODE,,}" == "local" ]]; then
+    echo "GEMFIELD: USE ${TORCHPOD_MODE} mode in ${PROTOCOL}"
+    exec sleep infinity
+else
+    echo "GEMFIELD ERROR: do not support ${TORCHPOD_MODE} mode. pick one from VNC,RDP,VNCRDP."
+    exit 1
+fi
+
+

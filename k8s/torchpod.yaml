@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mlab-homepod
+  name: mlab-torchpod
   namespace: mlab2 
   labels:
-    app: mlab-homepod
+    app: mlab-torchpod
     group: deepvac
 spec:
   nodeName: ai03
   containers:
-  - name: mlab-homepod 
-    image: gemfield/homepod:2.0
+  - name: mlab-torchpod 
+    image: gemfield/torchpod:1.0
     imagePullPolicy: IfNotPresent 
     workingDir: /home/gemfield 
     env:
@@ -18,11 +18,11 @@ spec:
       value: Asia/Shanghai
     - name: HOME
       value: /please_cd_to/home/gemfield
-    - name: DEEPVAC_USER
+    - name: TORCHPOD_USER
       value: gemfield
-    - name: DEEPVAC_PASSWORD
+    - name: TORCHPOD_PASSWORD
       value: gemfieldisacivilnetmaintainer
-    - name: GEMFIELD_MODE
+    - name: TORCHPOD_MODE
       value: VNCRDP
     - name: MLAB_DNS
       value: "192.168.0.114   ai1.gemfield.org"
@@ -86,7 +86,7 @@ metadata:
   name: gemfield-service
   namespace: mlab2
   labels:
-    app: mlab-homepod
+    app: mlab-torchpod
 spec:
   externalIPs:
     - 192.168.0.34
@@ -98,4 +98,4 @@ spec:
       targetPort: 5900
       name: vnc
   selector:
-    app: mlab-homepod
+    app: mlab-torchpod

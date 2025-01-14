@@ -1,0 +1,10 @@
+#!/command/with-contenv bash
+
+set -eu
+set -o pipefail
+
+echo "GEMFIELD: Start pipewire..."
+s6-svwait /run/service/kde
+exec s6-setuidgid $TORCHPOD_USER /usr/bin/pipewire
+
+

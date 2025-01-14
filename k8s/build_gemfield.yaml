@@ -10,7 +10,7 @@ spec:
   nodeName: ai03
   containers:
   - name: torch-by-gemfield 
-    image: gemfield/homepod:2.0-pro
+    image: gemfield/torchpod:1.0-pro
     imagePullPolicy: IfNotPresent 
     #command: ["/bin/bash","-c","sleep infinity"] 
     workingDir: /home/gemfield 
@@ -19,11 +19,11 @@ spec:
       value: Asia/Shanghai
     - name: HOME
       value: /please_cd_to/home/gemfield
-    - name: DEEPVAC_USER
+    - name: TORCHPOD_USER
       value: gemfield
-    - name: DEEPVAC_PASSWORD
+    - name: TORCHPOD_PASSWORD
       value: gemfield
-    - name: GEMFIELD_MODE
+    - name: TORCHPOD_MODE
       value: VNCRDP
     - name: PACKAGE_TYPE
       value: conda

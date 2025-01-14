@@ -1,5 +1,5 @@
 FROM nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
-maintainer "Gemfield <gemfield@civilnet.cn>"
+LABEL maintainer="gemfield@civilnet.cn"
 
 #uncomment it in mainland china 
 #RUN rm -f /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
@@ -64,7 +64,7 @@ EXPOSE 3389
 ARG MKL_VER="2020.4-912"
 
 #code & mkl
-COPY homepod_root /
+COPY torchpod_root /
 RUN wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB -O- | apt-key add - && \
     wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
     wget -q https://dl-ssl.google.com/linux/linux_signing_key.pub -O- | apt-key add - && \
@@ -83,8 +83,8 @@ RUN wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PROD
 ENV PGID=1000 \
     PUID=1000 \
     HOME=/home/gemfield \
-    DEEPVAC_USER=gemfield \
-    DEEPVAC_PASSWORD=deepvac
+    TORCHPOD_USER=gemfield \
+    TORCHPOD_PASSWORD=gemfield
 
 #im
 ENV GTK_IM_MODULE=ibus \
@@ -115,7 +115,7 @@ RUN /opt/conda/bin/pip3 install --no-cache-dir Pillow opencv-python easydict skl
     conda clean -y --force-pkgs-dirs
 
 #pytorch
-#note: homepod pro version will install pytorch from gemfield channel
+#note: torchpod pro version will install pytorch from gemfield channel
 RUN conda install -y magma-cuda111 pytorch torchvision torchaudio torchtext cudatoolkit=11.1 -c pytorch -c nvidia && \
     conda clean -ya && \
     conda clean -y --force-pkgs-dirs
@@ -125,7 +125,7 @@ RUN conda install -y magma-cuda111 pytorch torchvision torchaudio torchtext cuda
 ENV PATH_PREFIX=/ \
     VNC_RESIZE=scale \
     RECON_DELAY=250 \
-    PAGE_TITLE="MLab HomePod"
+    PAGE_TITLE="TorchPod"
 
 ENV SCR_WIDTH=1920 \
     SCR_HEIGHT=1080

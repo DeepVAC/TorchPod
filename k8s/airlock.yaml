@@ -9,7 +9,7 @@ spec:
   nodeName: ai05
   containers:
   - name: airlock 
-    image: gemfield/homepod:2.0
+    image: gemfield/torchpod:1.0
     imagePullPolicy: IfNotPresent 
     workingDir: /opt/public/airlock
     env:
@@ -17,11 +17,11 @@ spec:
       value: Asia/Shanghai
     - name: HOME
       value: /please_cd_to/opt/public/airlock
-    - name: DEEPVAC_USER
+    - name: TORCHPOD_USER
       value: gemfield
-    - name: DEEPVAC_PASSWORD
+    - name: TORCHPOD_PASSWORD
       value: gemfield
-    - name: GEMFIELD_MODE
+    - name: TORCHPOD_MODE
       value: VNCRDP
     resources:
       requests:

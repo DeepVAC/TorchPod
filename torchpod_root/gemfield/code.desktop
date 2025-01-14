@@ -1,0 +1,35 @@
+[Desktop Action new-empty-window]
+Exec=/usr/share/code/code --no-sandbox --new-window %F
+Icon=vscode
+Name[zh_CN]=新建空窗口
+Name=New Empty Window
+Name[de]=Neues leeres Fenster
+Name[es]=Nueva ventana vacía
+Name[fr]=Nouvelle fenêtre vide
+Name[it]=Nuova finestra vuota
+Name[ja]=新しい空のウィンドウ
+Name[ko]=새 빈 창
+Name[ru]=Новое пустое окно
+Name[zh_TW]=開新空視窗
+
+[Desktop Entry]
+Actions=new-empty-window;
+Categories=TextEditor;Development;IDE;
+Comment[zh_CN]=Code Editing. Redefined.
+Comment=Code Editing. Redefined.
+Exec=/usr/share/code/code --no-sandbox %F
+GenericName[zh_CN]=Text Editor
+GenericName=Text Editor
+Icon=vscode
+Keywords=vscode;
+MimeType=application/x-code-workspace;
+Name[zh_CN]=Visual Studio Code
+Name=Visual Studio Code
+Path=
+StartupNotify=false
+StartupWMClass=Code
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

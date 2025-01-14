@@ -1,0 +1,29 @@
+#!/command/with-contenv bash
+
+set -eu
+set -o pipefail
+
+if [[ "${PROTOCOL,,}" == "x11" ]]; then
+    echo "GEMFIELD: protocol is ${PROTOCOL}, USE Xorg"
+    if [[ "${TORCHPOD_MODE,,}" == *"vnc"* ]]; then
+        echo "GEMFIELD: USE VNC. start startplasma-x11..."
+        s6-svwait /run/service/tigervnc
+        exec s6-setuidgid $TORCHPOD_USER /usr/bin/startplasma-x11
+    elif [[ "${TORCHPOD_MODE,,}" == "rdp" ]]; then
+        echo "GEMFIELD: USE RDP. start xrdp-sesman..."
+        exec /usr/sbin/xrdp-sesman --nodaemon
+    elif [[ "${TORCHPOD_MODE,,}" == "local" ]]; then
+        exec s6-setuidgid $TORCHPOD_USER /usr/bin/startplasma-x11
+    else
+        echo "GEMFIELD ERROR: do not support ${TORCHPOD_MODE} mode. Pick one from VNC,RDP,VNCRDP."
+        exit 1
+    fi
+elif [[ "${PROTOCOL,,}" == "wayland" ]]; then
+    export XDG_SESSION_TYPE=wayland
+    echo "GEMFIELD: protocol is ${PROTOCOL}, USE KDE Wayland"
+    exec s6-setuidgid $TORCHPOD_USER  /usr/lib/x86_64-linux-gnu/libexec/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland
+else
+    echo "GEMFIELD ERROR: do not support ${PROTOCOL}. Pick one from X11 or Wayland."
+    exit 1
+fi
+

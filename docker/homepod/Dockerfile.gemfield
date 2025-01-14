@@ -1,7 +1,0 @@
-FROM gemfield/homepod:2.0-pro
-maintainer "Gemfield <gemfield@civilnet.cn>"
-
-RUN conda uninstall -y magma-cuda111 cudatoolkit && \
-    conda install -y magma-cuda112 && \
-    conda clean -ya && \
-    conda clean -y --force-pkgs-dirs
