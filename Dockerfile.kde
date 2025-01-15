@@ -5,7 +5,7 @@ EXPOSE 5900
 EXPOSE 7030
 EXPOSE 3389
 
-#workaround
+#workaround, just delete it in your local environment.
 #COPY apt.conf /etc/apt/apt.conf
 #base packages
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
@@ -71,6 +71,7 @@ ENV XDG_RUNTIME_DIR=/run/gemfield
 ENV HOME=$TORCHPOD_HOME
 
 COPY torchpod_root/ /
+RUN /gemfield/clean.sh
 
 WORKDIR $HOME
 ENTRYPOINT ["/init"]
