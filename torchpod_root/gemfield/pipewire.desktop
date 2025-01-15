@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=/usr/bin/pipewire
+Icon=
+Name=pipewire
+Path=
+Terminal=False
+Type=Application

@@ -3,6 +3,10 @@
 set -eu
 set -o pipefail
 
+if [[ "${PROTOCOL,,}" != "x11" ]]; then
+    exec sleep infinity
+fi
+
 if [[ "${TORCHPOD_MODE,,}" == *"vnc"* ]]; then
     echo "GEMFIELD: USE VNC. start vncconfig..."
     s6-svwait /run/service/tigervnc

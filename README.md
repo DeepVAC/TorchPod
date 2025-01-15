@@ -96,12 +96,12 @@ docker run -it --rm -eTORCHPOD_MODE=VNC -ePROTOCOL=x11 -p 7030:7030 -p 5900:5900
 ```bash
 docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=local -ePROTOCOL=wayland -v /tmp/.X11-unix:/tmp/.X11-unix -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/gemfield/wayland-0 -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY.lock:/run/gemfield/wayland-0.lock gemfield/torchpod
 ```
-- 命令5：启动图形化容器（wayland），通过RDP来访问（备注：尚未开发完成，目前得手动启动krdp服务）
+- 命令5：启动图形化容器（wayland），通过RDP来访问（备注：尚未开发完成，仍需要你手动在“系统设置”中打开“远程桌面”，并设置用户名密码，并手动启动/usr/bin/krdpserver，并在连接时点击确认按钮等）
 ```bash
 docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=RDP -ePROTOCOL=wayland -v /tmp/.X11-unix:/tmp/.X11-unix -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/gemfield/wayland-0 -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY.lock:/run/gemfield/wayland-0.lock  -p 3389:3389 gemfield/torchpod
 ```
 
-- 命令6：启动图形化容器（wayland），通过VNC来访问，ssh端口可选（备注：尚未开发完成，目前得手动启动krfb服务）
+- 命令6：启动图形化容器（wayland），通过VNC来访问，ssh端口可选（备注：尚未开发完成，仍需要你手动启动/usr/bin/krfb，包括设置密码，并在连接时点击确认按钮等）
 ```bash
 docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=VNC -ePROTOCOL=wayland -v /tmp/.X11-unix:/tmp/.X11-unix -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/gemfield/wayland-0 -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY.lock:/run/gemfield/wayland-0.lock -p 7030:7030 -p 5900:5900 -p 20022:22 gemfield/torchpod
 ```

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=/usr/bin/wireplumber
+Icon=
+Name=wireplumber
+Path=
+Terminal=False
+Type=Application
