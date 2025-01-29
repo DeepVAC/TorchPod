@@ -81,6 +81,13 @@ docker run -it --entrypoint=/bin/bash gemfield/torchpod
 Xephyr :2 -screen 1920x1080 -resizeable #如果本地没有X服务，启动Xephyr新建一个
 docker run -it --rm -eTORCHPOD_MODE=local -ePROTOCOL=x11 -e DISPLAY=:2 -v /tmp/.X11-unix:/tmp/.X11-unix gemfield/torchpod
 ```
+或者
+```bash
+#在vt5（一般来说就是ctrl+Alt+F5对应的terminal）上启动X服务
+sudo X :5 -terminate vt5
+#切换回来
+docker run -it --device=/dev/dri --rm -eTORCHPOD_MODE=local -ePROTOCOL=x11 -e DISPLAY=:5 -v /tmp/.X11-unix:/tmp/.X11-unix gemfield/torchpod
+```
 
 - 命令2：启动图形化容器（X11），通过RDP来访问
 ```bash
@@ -95,6 +102,13 @@ docker run -it --rm -eTORCHPOD_MODE=VNC -ePROTOCOL=x11 -p 7030:7030 -p 5900:5900
 - 命令4：启动图形化容器（wayland），使用本地宿主机的wayland compositor（或者本地的wayland服务端）
 ```bash
 docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=local -ePROTOCOL=wayland -v /tmp/.X11-unix:/tmp/.X11-unix -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/gemfield/wayland-0 -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY.lock:/run/gemfield/wayland-0.lock gemfield/torchpod
+```
+当然，你也可以在本地启动一个新的wayland compositor（e.g. Kwin），然后TorchPod作为客户端连接这个新的wayland compositor：
+```bash
+export $(dbus-launch)
+kwin_wayland --xwayland --socket /tmp/torchpod
+#指定该unix socket来连接上述的新的wayland compositor
+docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=RDP -ePROTOCOL=wayland -v /tmp/.X11-unix:/tmp/.X11-unix -v /tmp/torchpod:/run/gemfield/wayland-0 -v /tmp/torchpod.lock:/run/gemfield/wayland-0.lock -p 3389:3389 gemfield/torchpod
 ```
 - 命令5：启动图形化容器（wayland），通过RDP来访问（备注：尚未开发完成，仍需要你手动在“系统设置”中打开“远程桌面”，并设置用户名密码，并手动启动/usr/bin/krdpserver，并在连接时点击确认按钮等）
 ```bash
