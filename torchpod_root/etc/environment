@@ -1,9 +1,0 @@
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
-LC_ALL=zh_CN.UTF-8
-LANG=zh_CN.UTF-8
-LANGUAGE=zh_CN.UTF-8
-XMODIFIERS=@im=fcitx
-GTK_IM_MODULE=fcitx
-QT_IM_MODULE=fcitx
-
-

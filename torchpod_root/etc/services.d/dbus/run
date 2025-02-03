@@ -1,6 +1,0 @@
-#!/command/with-contenv bash
-
-set -eu
-set -o pipefail
-
-exec /usr/bin/dbus-daemon --system --nofork

@@ -1,15 +1,19 @@
 FROM gemfield/torchpod-kde:6.2
 LABEL maintainer="gemfield@civilnet.cn"
 
+#workaround, just delete it in your local environment.
+COPY apt.conf /etc/apt/apt.conf
+
 #Applications & dev packages
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install -y gettext-base libgl1 libglib2.0-0 libjpeg-dev libpng-dev  pybind11-dev libssl-dev \
+    apt install -y gettext-base libgl1 libglib2.0-0 libjpeg-dev libpng-dev pybind11-dev libssl-dev libc-dev libelf-dev gnutls-bin \
         libprotobuf-dev protobuf-compiler libboost-dev libboost-filesystem-dev libboost-program-options-dev libboost-system-dev && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN /gemfield/clean.sh
 #kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     chmod +x kubectl && \
@@ -19,5 +23,3 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
 RUN curl -L "https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb" -o /gemfield/wechat.deb && \
     apt install /gemfield/wechat.deb && \
     rm -f /gemfield/wechat.deb
-
-ENTRYPOINT ["/init"]

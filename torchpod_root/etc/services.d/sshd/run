@@ -1,7 +1,0 @@
-#!/command/with-contenv bash
-
-set -eu
-set -o pipefail
-
-echo "GEMFIELD: start opensshd..."
-exec /usr/sbin/sshd -D

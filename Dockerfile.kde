@@ -4,6 +4,7 @@ LABEL maintainer="gemfield@civilnet.cn"
 EXPOSE 5900
 EXPOSE 7030
 EXPOSE 3389
+EXPOSE 10022
 
 #workaround, just delete it in your local environment.
 #COPY apt.conf /etc/apt/apt.conf
@@ -14,13 +15,14 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections && \
     apt update && \
     apt dist-upgrade -y && \
-    apt install -y --no-install-recommends build-essential vim wget curl bzip2 git autoconf automake libtool make unzip g++ binutils cmake locales \
+    apt install -y --no-install-recommends build-essential vim wget curl bzip2 git git-lfs python3-pip bison flex autoconf automake libtool make unzip g++ binutils cmake locales \
         ca-certificates apt-transport-https gnupg gnupg2 software-properties-common iputils-ping net-tools tree openssh-server && \
     wget --no-check-certificate -q http://archive.neon.kde.org/public.key -O- | apt-key add - && \
     add-apt-repository -y http://archive.neon.kde.org/user && \
     apt update && \
     apt install -y ubuntu-minimal ubuntu-standard neon-desktop plasma-workspace-wayland kwin-wayland kwin-wayland-backend-x11 kwin-wayland-backend-wayland kwin-x11 \
-        xrdp supervisor supervisor-doc tigervnc-standalone-server tigervnc-xorg-extension krfb fcitx5 fcitx5-chinese-addons && \
+        xrdp supervisor supervisor-doc tigervnc-standalone-server tigervnc-xorg-extension krfb fcitx5 fcitx5-chinese-addons default-jdk openjdk-21-jdk && \
+    ln -fs /usr/bin/python3 /usr/bin/python && \
     apt purge -y firefox neon-repositories-mozilla-firefox grub* linux-headers* linux-modules-extra* linux-firmware* firmware-sof-signed* linux-tools-* hplip hplip-data fwupd printer-driver-* *-driver-* wireless-regdb && \
     rm -rf /usr/share/hplip/ /boot /usr/lib/modules && \
     cd /usr/share/wallpapers/ && rm -rf $(ls | grep -v Next) && \
@@ -44,7 +46,7 @@ RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add 
 #code & firefox
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install -y firefox code okular kdiff3 kompare gwenview && \
+    apt install -y firefox code okular kdiff3 kompare gwenview libreoffice && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
