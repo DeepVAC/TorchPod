@@ -4,7 +4,7 @@ LABEL maintainer="gemfield@civilnet.cn"
 EXPOSE 5900
 EXPOSE 7030
 EXPOSE 3389
-EXPOSE 10022
+EXPOSE 20022
 
 #workaround, just delete it in your local environment.
 #COPY apt.conf /etc/apt/apt.conf
@@ -63,6 +63,10 @@ ENV WAYLAND_DISPLAY=wayland-0
 ENV DISPLAY=:0
 ENV RENDER_ID=109
 ENV PROTOCOL=X11
+
+#VNC window size
+ENV SCR_WIDTH=1920
+ENV SCR_HEIGHT=1080
 
 ENV TORCHPOD_VER=1.0
 ENV TORCHPOD_MODE=RDP

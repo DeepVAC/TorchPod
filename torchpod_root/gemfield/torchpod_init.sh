@@ -4,6 +4,7 @@ echo "apply workaound......"
 #code
 mkdir -p $HOME/.local/share/applications/
 cp /gemfield/code.desktop "$HOME/.local/share/applications/code.desktop"
+cat /gemfield/code.desktop > "$HOME/Desktop/code.desktop"
 
 #autostart
 mkdir -p $HOME/.config/autostart
