@@ -46,7 +46,7 @@ RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add 
 #code & firefox
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install -y firefox code okular kdiff3 kompare gwenview libreoffice && \
+    apt install -y firefox code okular kdiff3 kompare gwenview kinfocenter libreoffice && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
