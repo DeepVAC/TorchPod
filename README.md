@@ -1,16 +1,14 @@
 # TorchPod
-跨平台的容器化开发环境，以Docker image形式（遵循OCI规范的image）封装，以GNU/Linux KDE图形系统呈现。支持如下三个平台：
+跨平台的容器化开发环境，以Docker image形式（遵循OCI规范的image）封装，以GNU/Linux KDE图形系统（neon）呈现，托管在docker hub上。可以在下述三种操作系统上使用docker命令、docker desktop、docker-compose、或者k8s进行部署：
 - Linux
 - Windows
 - macOS
 
-TorchPod镜像托管在docker hub上，可以使用docker命令进行部署，也可以使用docker desktop进行部署，也可以使用k8s进行部署。
-
-# TorchPod的主要组件及版本
+# TorchPod的主要组件
 
 |gemfield/torchpod  |版本号                 |
 |-------------------|----------------------|
-|OS                 |Ubuntu 24.04          |
+|Ubuntu             |24.04                 |
 |KDE Plasma         |6.3                   |
 |KDE Framework      |6.10                  |
 |Qt                 |6.8                   |
@@ -23,8 +21,7 @@ TorchPod镜像托管在docker hub上，可以使用docker命令进行部署，�
 |vlc                |3.0                   |
 
 
-
-# TorchPod的部署及运行
+# 部署和运行TorchPod
 TorchPod可以部署在如下平台上：
 - Linux
 - Windows
@@ -32,8 +29,7 @@ TorchPod可以部署在如下平台上：
 
 其中macOS支持intel处理器和apple silicon处理器。
 
-
-## 1,Linux
+## 1, Linux
 部署后可以在本地、vnc客户端、rdp客户端、浏览器中访问图形界面。共有如下8种部署方：
 
 |protocol| mode  | 部署方式 |备注 |
@@ -99,30 +95,43 @@ docker run -it --rm --cap-add SYS_NICE --device=/dev/dri -eTORCHPOD_MODE=VNC -eP
 |7030   |http  |通过浏览器来访问图形界面|
 |20022  |ssh   |用于ssh客户端、sftp客户端、KDE Dolphin、vscode remote ssh等|
 
+注意，上表中的ssh端口号用于vscode remote ssh功能时，首先在vscode上新建ssh target，然后在"Enter SSH Connection Command"输入框中输入：
+```bash
+#密码为:gemfield（$TORCHPOD_PASSWORD)
+ssh -p 20022 gemfield@<your_host_running_torchpod>
+```
 
-k8s集群部署方式（需要k8s集群运维经验，适合团队的协作管理）。请访问[基于k8s部署torchpod](./docs/k8s_usage.md)以获得更多部署信息。
+此外，如果要使用k8s集群部署方式（需要k8s集群运维经验，适合团队的协作管理），请访问[基于k8s部署torchpod](./docs/k8s_usage.md)以获得更多部署信息。
 
 ## 2, macOS
+下载docker desktop，同时支持intel和apple silicon。
+- 1，在docker desktop的设置——General中，配置虚拟机选项：
 
+![docker desktop 设置界面](https://github.com/user-attachments/assets/5123848f-78d0-4e27-b096-ec76089f706a)
+注意必须按照上图配置，因为docker desktop在Apple Silicon上需要借助Rosetta来运行TorchPod（x86_64/amd64镜像）。
+
+- 2，在docker desktop的设置-Resources中，可以配置CPU、内存、磁盘资源。如果需要设置代理，可以参考下图：
+![docker desktop的设置界面](https://github.com/user-attachments/assets/a49f97a7-36c1-478f-b136-82746b934115)
+
+- 3，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
+![docker desktop](https://github.com/user-attachments/assets/4f3d510c-7d21-4a0b-85ad-149b0abc726d)
+
+- 注意1：Volumes区域自定义。
+- 注意2：你也可以将TORCHPOD_MODE配置为RDP，以使用RDP远程桌面协议。这种情况下，上述的端口号需要启用3389而非5900。
 
 ## 3, Windows
 
 
-# vscode
-注意，当使用vscode remote ssh功能时，首先在vscode上新建ssh target，然后在"Enter SSH Connection Command"输入框中输入：
-```bash
-ssh -p 20022 gemfield@<your_host_running_torchpod>
-```
-密码输入:gemfield
 
 # 登录
 四种方式：
-- 1, docker命令：```docker exec -it```
+- 1，docker命令：```docker exec -it```
 - 2，vnc客户端，推荐tigervnc客户端，其可以在运行时动态调整窗口大小;
 - 3，rdp客户端，比如KRDC、remmina、Windows远程桌面等;
 - 4，浏览器：http://your_host:7030
+- 5，docker desktop的GUI界面上登陆：
+  ![Exec tab页面](https://github.com/user-attachments/assets/4afc2d72-b427-4778-8a83-21fb61de1a0f)
 
-也可以在docker desktop的GUI界面上登陆。
 
 # 账户信息
 TorchPod默认提供了如下账户：
@@ -142,6 +151,6 @@ TorchPod默认提供了如下账户：
 
 # 基于TorchPod的生态
 目前有如下项目基于TorchPod：
-- torchpod-ai: 基于TorchPod的PyTorch、ollama开发运行环境
-- torchpod-oh：基于TorchPod的openharmoey开发环境
+- torchpod-ai: 基于TorchPod的PyTorch、ollama开发运行环境；
+- ![torchpod-oh](https://github.com/CivilNet/torchpod-oh)：基于TorchPod的OpenHarmony开发和编译环境。
 
