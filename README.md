@@ -146,6 +146,10 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 - 3，下载gemfield/torchpod镜像（在中国大陆境内可能需要按照上述方式设置代理），参考上述macOS中的示意图；
 - 4，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
 
+![启动容器时的配置参数](https://github.com/user-attachments/assets/6d025681-596f-4f05-a012-c35e7d873ff2)
+
+启动后docker desktop的界面可能会出现“等待转圈”的现象，这可能是bug所致。这个时候可以在docker desktop的Terminal中用命令来查看容器的启动情况：
+![查看容器状态](https://github.com/user-attachments/assets/2868d55c-8fb7-4b73-b572-d5756e0b2ceb)
 
 注意1：Volumes区域自定义。
 
@@ -156,7 +160,7 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 - 5，打开Windows自带的远程桌面连接，输入localhost、用户名（$TORCHPOD_USER)、密码($TORCHPOD_PASSWORD)来连接。
 
 # 登录
-四种方式：
+上面已经演示过了一些TorchPod的登录方式。总共有5种方式：
 - 1，docker命令：```docker exec -it```
 - 2，vnc客户端，推荐TigerVNC Viewer客户端，其可以在运行时动态调整窗口大小;
 - 3，rdp客户端，比如KRDC、remmina、Windows远程桌面等;
@@ -187,7 +191,7 @@ TorchPod默认提供了如下账户：
 - ![torchpod-oh](https://github.com/CivilNet/torchpod-oh)：基于TorchPod的OpenHarmony开发和编译环境。
 
 # 已知问题
-- 在TigerVNC Viewer中动态调整窗口大小时，KWin会crash并重启；
+- TigerVNC Viewer动态调整窗口大小时，KWin会crash并重启；
 - macOS上，TorchPod中的vscode无法正常使用，应该是vscode的chromium被Rosetta翻译为arm指令时有问题；
 - PROTOCOL设置为wayland时，vnc和rdp的服务端都需要手工运行多步才能开启，因为截至目前这些服务还没有命令行启动方式。
 
