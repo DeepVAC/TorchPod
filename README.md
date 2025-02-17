@@ -112,9 +112,18 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 注意必须按照上图配置，因为docker desktop在Apple Silicon上需要借助Rosetta来运行TorchPod（x86_64/amd64镜像）。
 
 - 2，在docker desktop的设置-Resources中，可以配置CPU、内存、磁盘资源。如果需要设置代理，可以参考下图：
-![docker desktop的设置界面](https://github.com/user-attachments/assets/a49f97a7-36c1-478f-b136-82746b934115)
+![HTTP/HTTPS代理](https://github.com/user-attachments/assets/a49f97a7-36c1-478f-b136-82746b934115)
 
-- 3，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
+除了HTTP/HTTPS代理外，也支持SOCKS5代理：
+![SOCKS5代理](https://github.com/user-attachments/assets/ff70bf85-eee8-458d-93df-dcf105a0fc32)
+
+
+- 3，下载gemfield/torchpod镜像（在中国大陆境内可能需要按照上述方式设置代理），点击pull按钮：
+
+![TorchPod镜像名称](https://github.com/user-attachments/assets/5b740fe9-a0b1-43b6-87fa-35ffe316f9e9)
+
+
+- 4，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
 ![docker desktop](https://github.com/user-attachments/assets/4f3d510c-7d21-4a0b-85ad-149b0abc726d)
 
 - 注意1：Volumes区域自定义。
