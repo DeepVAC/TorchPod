@@ -1,8 +1,9 @@
 # TorchPod
-跨平台的容器化开发环境，以Docker image形式（遵循OCI规范的image）封装，以GNU/Linux KDE图形系统（neon）呈现，托管在docker hub上。可以在下述三种操作系统上使用docker命令、docker desktop、docker-compose、或者k8s进行部署：
-- Linux
-- Windows
-- macOS
+TorchPod是跨平台的容器化开发环境，它
+- 以Docker image形式（遵循OCI规范的image）封装，
+- 以GNU/Linux KDE图形系统（neon）呈现，
+- 托管在docker hub上，
+- 可以在Linux、macOS、Windows操作系统上使用docker命令、docker desktop、docker-compose、或者k8s进行部署。
 
 # TorchPod的主要组件
 
