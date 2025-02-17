@@ -105,7 +105,7 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 此外，如果要使用k8s集群部署方式（需要k8s集群运维经验，适合团队的协作管理），请访问[基于k8s部署torchpod](./docs/k8s_usage.md)以获得更多部署信息。
 
 ## 2, macOS
-下载docker desktop，同时支持intel和apple silicon。
+下载并安装最新版docker desktop。启动docker desktop后：
 - 1，在docker desktop的设置——General中，配置虚拟机选项：
 
 ![docker desktop 设置界面](https://github.com/user-attachments/assets/5123848f-78d0-4e27-b096-ec76089f706a)
@@ -136,7 +136,7 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 # 登录
 四种方式：
 - 1，docker命令：```docker exec -it```
-- 2，vnc客户端，推荐tigervnc客户端，其可以在运行时动态调整窗口大小;
+- 2，vnc客户端，推荐TigerVNC Viewer客户端，其可以在运行时动态调整窗口大小;
 - 3，rdp客户端，比如KRDC、remmina、Windows远程桌面等;
 - 4，浏览器：http://your_host:7030
 - 5，docker desktop的GUI界面上登陆：
@@ -163,4 +163,9 @@ TorchPod默认提供了如下账户：
 目前有如下项目基于TorchPod：
 - torchpod-ai: 基于TorchPod的PyTorch、ollama开发运行环境；
 - ![torchpod-oh](https://github.com/CivilNet/torchpod-oh)：基于TorchPod的OpenHarmony开发和编译环境。
+
+# 已知问题
+- 在TigerVNC Viewer中动态调整窗口大小时，KWin会crash并重启；
+- macOS上，TorchPod中的vscode无法正常使用，应该是vscode的chromium被Rosetta翻译为arm指令时有问题；
+- PROTOCOL设置为wayland时，vnc和rdp的服务端都需要手工运行多步才能开启，因为截至目前这些服务还没有命令行启动方式。
 
