@@ -105,7 +105,7 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 此外，如果要使用k8s集群部署方式（需要k8s集群运维经验，适合团队的协作管理），请访问[基于k8s部署torchpod](./docs/k8s_usage.md)以获得更多部署信息。
 
 ## 2, macOS
-下载并安装最新版docker desktop。启动docker desktop后：
+下载并安装最新版docker desktop，以及TigerVNC Viewer客户端。启动docker desktop后：
 - 1，在docker desktop的设置——General中，配置虚拟机选项：
 
 ![docker desktop 设置界面](https://github.com/user-attachments/assets/5123848f-78d0-4e27-b096-ec76089f706a)
@@ -126,12 +126,34 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 - 4，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
 ![docker desktop](https://github.com/user-attachments/assets/4f3d510c-7d21-4a0b-85ad-149b0abc726d)
 
-- 注意1：Volumes区域自定义。
-- 注意2：你也可以将TORCHPOD_MODE配置为RDP，以使用RDP远程桌面协议。这种情况下，上述的端口号需要启用3389而非5900。
+注意1：Volumes区域自定义。
+
+注意2：你也可以将TORCHPOD_MODE配置为RDP，以使用RDP远程桌面协议。这种情况下，上述的端口号需要启用3389而非5900。
+
+注意3：macOS默认的文件系统不支持区分文件名大小写，如果要将宿主机的目录挂载到TorchPod容器中，务必注意这个问题！你也可以在macOS宿主机上新建“宗卷”，选择区分文件名大小写的文件系统格式。
+
+- 5，启动TigerVNC Viewer客户端：
+
+![TigerVNC Viewer](https://github.com/user-attachments/assets/604c0d17-47db-4a12-b7b4-6482475a985f)
+
+输入VNC服务器地址：localhost；点击“连接”即可。你也可以在连接前点击“选项”按钮，进行一些参数配置。
+
 
 ## 3, Windows
+下载并安装最新版docker desktop。启动docker desktop后：
+- 1，在docker desktop的设置——General中，配置虚拟机选项：WSL2。该项为默认配置，也就是在Windows系统上默认是用WSL2来运行TorchPod镜像（Linux镜像）；
+- 2，配置代理，参考上述macOS中的示意图；
+- 3，下载gemfield/torchpod镜像（在中国大陆境内可能需要按照上述方式设置代理），参考上述macOS中的示意图；
+- 4，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
 
 
+注意1：Volumes区域自定义。
+
+注意2：你也可以将TORCHPOD_MODE配置为VNC，以使用VNC远程桌面协议。这种情况下，上述的端口号需要启用5900而非3389。
+
+注意3：Windows默认的文件系统不支持区分文件名大小写，如果要将宿主机的目录挂载到TorchPod容器中，务必注意这个问题！你也可以在宿主机上新建区分文件名大小写的文件系统格式。
+
+- 5，打开Windows自带的远程桌面连接，输入localhost、用户名（$TORCHPOD_USER)、密码($TORCHPOD_PASSWORD)来连接。
 
 # 登录
 四种方式：
