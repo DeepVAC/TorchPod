@@ -21,7 +21,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     add-apt-repository -y http://archive.neon.kde.org/user && \
     apt update && \
     apt install -y ubuntu-minimal ubuntu-standard neon-desktop plasma-workspace-wayland kwin-wayland kwin-wayland-backend-x11 kwin-wayland-backend-wayland kwin-x11 \
-        xrdp supervisor supervisor-doc tigervnc-standalone-server tigervnc-xorg-extension krfb fcitx5 fcitx5-chinese-addons default-jdk openjdk-21-jdk && \
+        xrdp supervisor supervisor-doc tigervnc-standalone-server tigervnc-xorg-extension krfb fcitx5 fcitx5-chinese-addons && \
     ln -fs /usr/bin/python3 /usr/bin/python && \
     apt purge -y firefox neon-repositories-mozilla-firefox grub* linux-headers* linux-modules-extra* linux-firmware* firmware-sof-signed* linux-tools-* hplip hplip-data fwupd printer-driver-* *-driver-* wireless-regdb && \
     rm -rf /usr/share/hplip/ /boot /usr/lib/modules && \
@@ -48,9 +48,10 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
 #code & firefox
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install -y firefox code okular kdiff3 kompare gwenview kinfocenter libreoffice && \
+    apt install -y firefox-nightly code okular kdiff3 kompare gwenview kinfocenter libreoffice && \
     apt autoremove -y && \
     apt clean && \
+    ln -sf /usr/bin/firefox-nightly /usr/bin/firefox && \
     rm -rf /var/lib/apt/lists/*
 
 #env
