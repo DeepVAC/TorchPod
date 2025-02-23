@@ -1,17 +1,21 @@
 # TorchPod
-TorchPod是跨平台的容器化开发环境，它
-- 以Docker image形式（遵循OCI规范的image）封装，
-- 以GNU/Linux KDE图形系统（neon）呈现，
+TorchPod是跨平台的容器化Linux桌面环境，它
+- 以Docker image形式封装（遵循OCI规范的image），
+- 支持multi-arch（目前是amd64、arm64），
+- 以GNU/Linux KDE桌面系统呈现（neon），
 - 托管在docker hub上，
-- 可以在Linux、macOS、Windows操作系统上使用docker命令、docker desktop、docker-compose、或者k8s进行部署。
+- 可以在Linux、macOS、Windows操作系统上部署。
+
 
 # TorchPod的主要组件
+
+以目前最新版本gemfield/torchpod:latest为例：
 
 |gemfield/torchpod  |版本号                 |
 |-------------------|----------------------|
 |Ubuntu             |24.04                 |
 |KDE Plasma         |6.3                   |
-|KDE Framework      |6.10                  |
+|KDE Framework      |6.11                  |
 |Qt                 |6.8                   |
 |Python             |3.12                  |
 |openjdk            |21                    |
@@ -28,10 +32,15 @@ TorchPod可以部署在如下平台上：
 - Windows
 - macOS
 
-其中macOS支持intel处理器和apple silicon处理器。
+都支持intel处理器和arm64处理器（包含Apple Silicon）。需要注意两点：
+- 由于TorchPod是multi-arch的，自动拉取的镜像将会是和host上cpu arch一致的镜像版本。如果要拉取不同cpu arch的版本，则使用docker pull的--platform参数；
+- 由于macOS（Apple Silicon）上有出色的Rosetta2指令集转译程序，它允许用户在Apple silicon 上运行包含x86_64指令集的程序，因此你可以在macOS（Apple Silicon）上使用TorchPod的amd64版本。结合上一条，可以这样拉取镜像：
+```bash
+docker pull --platform linux/amd64 gemfield/torchpod
+```
 
 ## 1, Linux
-部署后可以在本地、vnc客户端、rdp客户端、浏览器中访问图形界面。共有如下8种部署方：
+部署后可以在本地、vnc客户端、rdp客户端、浏览器中访问图形界面。共有如下6种部署方法：
 
 |protocol| mode  | 部署方式 |备注 |
 |--------|-------|----------|---------|
@@ -109,7 +118,7 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 - 1，在docker desktop的设置——General中，配置虚拟机选项：
 
 ![docker desktop 设置界面](https://github.com/user-attachments/assets/5123848f-78d0-4e27-b096-ec76089f706a)
-注意必须按照上图配置，因为docker desktop在Apple Silicon上需要借助Rosetta来运行TorchPod（x86_64/amd64镜像）。
+注意：如果在Apple Silicon上使用amd64处理器架构的TorchPod，则必须按照上图配置，因为docker desktop在Apple Silicon上需要借助Rosetta2来运行TorchPod的x86_64/amd64版本。
 
 - 2，在docker desktop的设置-Resources中，可以配置CPU、内存、磁盘资源。如果需要设置代理，可以参考下图：
 ![HTTP/HTTPS代理](https://github.com/user-attachments/assets/a49f97a7-36c1-478f-b136-82746b934115)
@@ -123,8 +132,17 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 ![TorchPod镜像名称](https://github.com/user-attachments/assets/5b740fe9-a0b1-43b6-87fa-35ffe316f9e9)
 
 
+以上是GUI操作方式，对应的还有命令行方式。
+
+当用命令行的方式时，你可以在docker desktop的Terminal中使用docker pull命令：
+![docker pull](https://github.com/user-attachments/assets/3e69c965-1bb4-49d5-8da4-19258813297d)
+
+
+
 - 4，启动容器，在docker desktop的Images界面，点击启动按钮，进行如下配置：
 ![docker desktop](https://github.com/user-attachments/assets/4f3d510c-7d21-4a0b-85ad-149b0abc726d)
+
+当然你也可以在docker desktop的Terminal中使用docker run命令。
 
 注意1：Volumes区域自定义。
 
@@ -150,6 +168,8 @@ ssh -p 20022 gemfield@<your_host_running_torchpod>
 
 启动后docker desktop的界面可能会出现“等待转圈”的现象，这可能是bug所致。这个时候可以在docker desktop的Terminal中用命令来查看容器的启动情况：
 ![查看容器状态](https://github.com/user-attachments/assets/2868d55c-8fb7-4b73-b572-d5756e0b2ceb)
+
+当然你也可以在docker desktop的Terminal中使用docker run命令。
 
 注意1：Volumes区域自定义。
 
@@ -191,7 +211,6 @@ TorchPod默认提供了如下账户：
 - ![torchpod-oh](https://github.com/CivilNet/torchpod-oh)：基于TorchPod的OpenHarmony开发和编译环境。
 
 # 已知问题
-- TigerVNC Viewer动态调整窗口大小时，KWin会crash并重启；
-- macOS上，TorchPod中的vscode无法正常使用，应该是vscode的chromium被Rosetta翻译为arm指令时有问题；
+- macOS（Apple Silicon）上使用amd64处理器架构的TorchPod时，vscode无法正常运行，应该是vscode的chromium被Rosetta2翻译为arm指令时有问题；
 - PROTOCOL设置为wayland时，vnc和rdp的服务端都需要手工运行多步才能开启，因为截至目前这些服务还没有命令行启动方式。
 
